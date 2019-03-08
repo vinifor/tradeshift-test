@@ -1,0 +1,24 @@
+version: '3'
+services:
+ docker-app:
+    image: vinicius/test-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - docker-postgres
+ docker-postgres:
+    image: postgres:10.4
+    environment:
+      - POSTGRES_DB=test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=tradeshift
+ pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - docker-postgres
+    ports:
+      - "80:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    restart: unless-stopped
